@@ -1,11 +1,11 @@
 import React from 'react';
-import List from './List';
+import UserList from './UserList';
 
 function App() {
     return (
         <div>
-            <h1>Animal Activation</h1>
-            <List />
+            <h1>RUD Application</h1>
+            <UserList />
         </div>
     );
 }
