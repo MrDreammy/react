@@ -1,22 +1,13 @@
-import './App.css'
+import React from 'react';
+import List from './List';
 
-function App({ title, data }) {
+function App() {
     return (
         <div>
-            <h1>{title}</h1>
-            <table border='1'>
-                {data.map(group => (
-                    <tr key={group.id}>
-                        <th>{group.category}</th>
-                        {group.animals.map(animal => (
-                            <td key={animal.name} style={{ backgroundColor: animal.color }}>
-                                {animal.name}
-                            </td>
-                        ))}
-                    </tr>
-                ))}
-            </table>
+            <h1>Animal Activation</h1>
+            <List />
         </div>
     );
 }
-export default App
+
+export default App;
