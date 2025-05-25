@@ -1,51 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { getUsers, createUser, updateUser, deleteUser } from './services/api';
-import UserForm from './components/UserForm';
-import UserList from './components/UserList';
+import React, { useEffect, useState } from 'react';
+import { getTasks, createTask, updateTask, deleteTask } from './services/api';
+import TodosForm from './components/TodosForm';
+import TodosLists from './components/TodosLists';
 
 export default function App() {
-    const [users, setUsers] = useState([]);
-    const [filter, setFilter] = useState('');
-    const [sortAsc, setSortAsc] = useState(true);
-    const [bgColor, setBgColor] = useState('white');
+    const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        getUsers().then(res => setUsers(res.data));
+        getTasks().then(res => setTasks(res.data));
     }, []);
 
-    const handleAdd = (user) => {
-        createUser(user).then(res => setUsers(prev => [...prev, res.data]));
+    const handleAdd = (task) => {
+        createTask(task).then(res => setTasks(prev => [...prev, res.data]));
     };
 
-    const handleUpdate = (id, updatedUser) => {
-        updateUser(id, updatedUser).then(res => {
-            setUsers(prev => prev.map(user => user.id === id ? res.data : user));
+    const handleUpdate = (id, updatedTask) => {
+        updateTask(id, updatedTask).then(res => {
+            setTasks(prev => prev.map(task => task.id === id ? res.data : task));
         });
     };
 
     const handleDelete = (id) => {
-        deleteUser(id).then(() => {
-            setUsers(prev => prev.filter(user => user.id !== id));
+        deleteTask(id).then(() => {
+            setTasks(prev => prev.filter(task => task.id !== id));
         });
     };
 
-    const filteredUsers = users.filter(user => user.name.toLowerCase().includes(filter.toLowerCase()));
-    const sortedUsers = [...filteredUsers].sort((a, b) => sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
-
     return (
-        <div className="min-h-screen p-4" style={{ backgroundColor: bgColor }}>
-            <h1 className="text-2xl font-bold mb-4">User List</h1>
-            <div className="mb-4">
-                <input value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Filter by name" className="border p-1 mr-2" />
-                <button onClick={() => setSortAsc(!sortAsc)} className="bg-gray-300 px-2 py-1 rounded mr-2">
-                    Sort {sortAsc ? '↓' : '↑'}
-                </button>
-                <button onClick={() => setBgColor(bgColor === 'white' ? '#f0f8ff' : 'white')} className="bg-purple-300 px-2 py-1 rounded">
-                    Toggle Background Color
-                </button>
-            </div>
-            <UserForm onAdd={handleAdd} />
-            <UserList users={sortedUsers} onUpdate={handleUpdate} onDelete={handleDelete} />
+        <div className="p-4">
+            <h1 className="text-2xl font-bold mb-4">Task Manager</h1>
+            <TodosForm onAdd={handleAdd} />
+            <TodosLists tasks={tasks} onUpdate={handleUpdate} onDelete={handleDelete} />
         </div>
     );
 }

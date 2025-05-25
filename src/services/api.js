@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://680fc8ae27f2fdac240f60df.mockapi.io/users';
+const BASE_URL = 'https://680fc8ae27f2fdac240f60df.mockapi.io/tasks';
 
-export const getUsers = () => axios.get(BASE_URL);
-export const createUser = (user) => axios.post(BASE_URL, user);
-export const updateUser = (id, user) => axios.put(`${BASE_URL}/${id}`, user);
-export const deleteUser = (id) => axios.delete(`${BASE_URL}/${id}`);
+export const getTasks = () => axios.get(BASE_URL);
+export const createTask = (task) => axios.post(BASE_URL, task);
+export const updateTask = (id, task) => axios.put(`${BASE_URL}/${id}`, task);
+export const deleteTask = (id) => axios.delete(`${BASE_URL}/${id}`);
